@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block script %}
+<script type="text/x-handlebars-template" id="entermsg">
+    {% raw -%}
+        <p style="background-color:burlywood;" class="border border-secondary rounded  w-25 px-4 py-1 self"><small><strong>{{name}}</strong> entered the room...</small></p>
+    {%- endraw %}
+</script>
+<script type="text/x-handlebars-template" id="online">
+    {% raw -%}
+        {{#each users_online}}
+            <p><a href="" class="user-link badge badge-warning w-50" data-value="{{this}}">{{this}} <span id="{{this}}" class="label" style="background-color: red;"></span> </a></p>  
+        {{/each}}
+    {%- endraw %}
+
+</script>
+<script type="text/x-handlebars-template" id="socketmsg">
+        {% raw -%}
+            {{#if flag}}
+            <div class="d-flex flex-row-reverse "> 
+                <p class="d-flex flex-column border border-secondary rounded  w-50 px-4 py-1 self">
+                    <span class="d-flex justify-content-between"><small>{{nick}}</small></span>
+                    <strong><span class="d-flex justify-content-between">{{txtmsg}}</span></strong>
+                    <span class="d-flex justify-content-between"><small>{{clock}}</small></span>
+                    <button  type="button" class="delete align-self-end badge badge-danger"  data-name="{{nick}}" data-text="{{txtmsg}}" data-time="{{clock}}" >Delete</button>
+                </p>
+            </div>
+            {{else}}
+            <div class="d-flex flex-row">
+                <p class="d-flex flex-column border border-secondary rounded  w-50 px-4 notself">
+                    <span class="d-flex justify-content-between h-25"><small>{{nick}}</small></span>
+                    <strong><span class="d-flex justify-content-between h-25">{{txtmsg}}</span></strong>
+                    <span class="d-flex justify-content-between h-25"><small>{{clock}}</small></span>
+                </p>
+            </div>
+            {{/if}}
+        {%- endraw %}
+</script>
+<script type="text/x-handlebars-template" id="chan_name">
+    {% raw -%}
+        {{name}}
+    {%- endraw %}
+</script>
+<script type="text/x-handlebars-template" id="loaded">
+    {% raw -%}
+        {{#each messages}}
+            {{this}}
+        {{/each}}
+    {%- endraw %}
+</script>
+<script type="text/x-handlebars-template" id="channeladd">
+    {% raw -%}
+        <p><a href="" class="channel-link badge badge-primary badge-warning w-50" data-value="{{newChannel}}">{{newChannel}}</a></p>
+    {%- endraw %}
+</script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script src="{{url_for('static', filename = 'home.js')}}"></script>
+{% endblock %}
+
+{% block heading %}
+    <h4 id="navwindow" class="h4 mt-4 mb-3 py-1 border rounded text-center shadow-sm">Welcome {{name}} to Flack</h4>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div id="channelwindow" class="col-lg-4 col-md-12 col-sm-12 border rounded mt-4 mb-3 text-center text-wrap shadow-sm">
+                <button class="btn btn-block mt-4" id="creatBtn">Create Channel</button>
+                <a href="{{url_for('logout')}}" id="logout" class="btn btn-danger btn-sm mt-4">Logout</a>
+                <p class="h6 mt-4">Channel List</p>
+                {% for channel in channels %}
+                    <p><a href="" class="channel-link badge badge-warning w-50" data-value="{{channel}}">{{channel}}</a></p>
+                {% endfor %}
+                <div id="list">
+
+                </div>
+                <hr>
+                <p class="h6 mt-4" >Users Online</p>
+
+                <div id="userlist">
+                    
+                </div>
+                
+            </div>
+            <div id="open" class="col-lg-8 col-md-12 col-sm-12">
+                <div class="badge badge-pill badge-info mb-1" id="Channelname">
+
+                </div>
+                <div style="height: 600px; display: flex; flex-direction: column-reverse; " class="border overflow-auto rounded-lg  shadow-lg" id="mainchatwindow">
+                    <div style="padding: 1rem;" id="socketmsgnow">
+
+                    </div>
+                    <div style="padding: 1rem;" id="exampleFormControlTextarea">
+
+                    </div>
+                    
+                </div>
+                <form>
+                    <div class="input-group mb-3 form-group">
+                        <input type="text" class="form-control mt-1" autofocus id="msg" placeholder="type message" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                        <button class="btn btn-outline-primary mt-1" type="submit" id="sendmsg">Send</button>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+#mainchatwindow {
+    background-color:#FEF9E7;
+}
+#channelwindow {
+    background-color:#FCF3CF;
+}
+#navwindow {
+    background-color:#F7DC6F;
+}
+.self {
+    background-color: lemonchiffon;
+}
+.notself {
+    background-color:lightblue;
+}
+* {
+    font-family: 'Schoolbell', cursive;
+}
+#creatBtn {
+    background-color: lightgrey;
+}
+#creatBtn:hover {
+    background-color:lightseagreen;
+}
+@keyframes show{
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes move{
+    from {
+        left: 100%;
+    }
+    to {
+        left: 0%;
+    }
+}
+#exampleFormControlTextarea{
+    animation-name: show;
+    animation-duration: 1s;
+    animation-fill-mode : forward;  
+}
+
+.channel-link {
+    animation-name: show;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+#Channelname {
+    position: relative;
+    animation-name: move;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
