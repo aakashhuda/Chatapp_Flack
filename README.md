@@ -1,4 +1,4 @@
-# Flack - A chat application
+# Flack - A Chat Application
 #### Tech Stack
 - Python
 - Django
